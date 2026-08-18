@@ -1,0 +1,11 @@
+{
+  "name": "bible-bowl",
+  "version": "1.0.0",
+  "description": "Bible Bowl daily quiz app: student accounts, auto-generated quizzes from uploaded scripture, admin dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": { "node": ">=22.5.0" },
+  "license": "MIT"
+}

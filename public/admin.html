@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bible Bowl — Coach Dashboard</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+</head>
+<body>
+<header class="app wide">
+  <div class="bar">
+    <div class="logo"><span class="mark">🏆</span> Bible Bowl — Coach Dashboard</div>
+    <div class="spacer"></div>
+    <span class="who" id="whoami"></span>
+    <button class="secondary small" id="btn-logout">Sign out</button>
+  </div>
+</header>
+
+<div class="wrap wide">
+  <div class="tabs-nav">
+    <button data-tab="students" class="active">Students</button>
+    <button data-tab="books">Scripture Books</button>
+  </div>
+
+  <!-- STUDENTS TAB -->
+  <section id="tab-students">
+    <div class="grid-3">
+      <div class="card stat"><div class="big" id="ov-students">–</div><div class="lbl">Students</div></div>
+      <div class="card stat"><div class="big" id="ov-today">–</div><div class="lbl">Took today’s quiz</div></div>
+      <div class="card stat"><div class="big" id="ov-avg">–</div><div class="lbl">Team average</div></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Students <span class="tiny" id="today-label"></span></h2>
+      <p class="tiny" style="margin:2px 0 12px">Click a student for daily history, quiz details, and book assignments.</p>
+      <div style="overflow-x:auto">
+        <table class="data" id="students-table">
+          <thead><tr>
+            <th>Name</th><th>Today</th><th>Last score</th><th>Average</th><th>Streak</th><th>Quizzes</th><th>Books</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="chart-empty hidden" id="no-students">No student accounts yet. Students create their own accounts at the main page — share the site link with them.</div>
+    </div>
+
+    <!-- student detail -->
+    <div class="card hidden" id="student-detail">
+      <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+        <h2 id="sd-name"></h2><span class="muted" id="sd-email"></span>
+        <div class="spacer"></div>
+        <button class="secondary small" id="sd-close">Close</button>
+      </div>
+      <div class="grid-3" style="margin:12px 0">
+        <div class="card stat" style="box-shadow:none"><div class="big" id="sd-avg">–</div><div class="lbl">Average</div></div>
+        <div class="card stat" style="box-shadow:none"><div class="big" id="sd-streak">–</div><div class="lbl">Streak</div></div>
+        <div class="card stat" style="box-shadow:none"><div class="big" id="sd-count">–</div><div class="lbl">Daily quizzes</div></div>
+      </div>
+      <h3>Daily scores</h3>
+      <div id="sd-chart"></div>
+      <h3 style="margin-top:18px">Assigned books</h3>
+      <div id="sd-books"></div>
+      <div style="margin-top:8px"><button class="small" id="sd-save-books">Save assignments</button> <span class="ok-msg" id="sd-books-msg"></span></div>
+      <h3 style="margin-top:18px">Attempt history</h3>
+      <div id="sd-attempts"></div>
+      <div style="margin-top:20px;border-top:1px solid var(--line);padding-top:14px">
+        <button class="danger small" id="sd-delete">Delete student account</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKS TAB -->
+  <section id="tab-books" class="hidden">
+    <div class="card">
+      <h2>Upload scripture</h2>
+      <p class="muted" style="margin:4px 0 12px">Upload a JSON file with a book’s text. Re-uploading a book with the same name replaces it. After uploading, assign it to students from the Students tab.</p>
+      <div class="drop" id="drop">
+        <p style="margin:0 0 10px"><strong>Drop a .json file here</strong> or</p>
+        <input type="file" id="file-input" accept=".json,application/json" style="display:none">
+        <button class="secondary" id="btn-browse">Choose file…</button>
+        <div class="err" id="upload-err"></div>
+        <div class="ok-msg" id="upload-ok"></div>
+      </div>
+      <details style="margin-top:14px">
+        <summary class="muted" style="cursor:pointer">Expected JSON format</summary>
+        <pre class="fmt">{
+  "book": "Acts",
+  "translation": "NKJV",
+  "chapters": [
+    {
+      "chapter": 1,
+      "verses": [
+        { "verse": 1, "text": "The former account I made, O Theophilus..." },
+        { "verse": 2, "text": "..." }
+      ]
+    }
+  ]
+}</pre>
+        <p class="tiny">Also accepted: verses as a plain array of strings, or chapters as an object map like <code class="fmt">{"1": {"1": "text..."}}</code>. A file may also contain an array of several books.</p>
+      </details>
+    </div>
+
+    <div class="card">
+      <h2>Uploaded books</h2>
+      <div id="books-list"></div>
+    </div>
+  </section>
+</div>
+
+<script src="/chart.js"></script>
+<script src="/admin.js"></script>
+</body>
+</html>

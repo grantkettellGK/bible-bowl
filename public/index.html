@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bible Bowl Daily Quiz</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+</head>
+<body>
+<header class="app">
+  <div class="bar">
+    <div class="logo"><span class="mark">📖</span> Bible Bowl</div>
+    <div class="spacer"></div>
+    <span class="who" id="whoami"></span>
+    <button class="secondary small hidden" id="btn-logout">Sign out</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- AUTH -->
+  <section id="view-auth" class="hidden">
+    <div class="auth-box card">
+      <div class="tabs">
+        <button id="tab-login">Sign in</button>
+        <button id="tab-register" class="inactive">Create account</button>
+      </div>
+      <form id="form-login">
+        <label for="li-email">Email</label>
+        <input id="li-email" type="email" autocomplete="email" required>
+        <label for="li-pass">Password</label>
+        <input id="li-pass" type="password" autocomplete="current-password" required>
+        <div class="err" id="li-err"></div>
+        <button type="submit" style="width:100%;margin-top:8px">Sign in</button>
+      </form>
+      <form id="form-register" class="hidden">
+        <label for="re-name">Full name</label>
+        <input id="re-name" type="text" autocomplete="name" required>
+        <label for="re-email">Email</label>
+        <input id="re-email" type="email" autocomplete="email" required>
+        <label for="re-pass">Password <span class="tiny">(6+ characters)</span></label>
+        <input id="re-pass" type="password" autocomplete="new-password" minlength="6" required>
+        <div class="err" id="re-err"></div>
+        <button type="submit" style="width:100%;margin-top:8px">Create account</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="view-dash" class="hidden">
+    <div class="grid-3">
+      <div class="card stat"><div class="big" id="st-streak">–</div><div class="lbl">Day streak 🔥</div></div>
+      <div class="card stat"><div class="big" id="st-avg">–</div><div class="lbl">Average score</div></div>
+      <div class="card stat"><div class="big" id="st-count">–</div><div class="lbl">Daily quizzes taken</div></div>
+    </div>
+
+    <div class="card" id="card-daily" style="margin-top:16px">
+      <h2>Today’s Quiz <span class="tiny" id="daily-date"></span></h2>
+      <div id="daily-body"></div>
+    </div>
+
+    <div class="card">
+      <h2>Practice Mode</h2>
+      <p class="muted" style="margin:4px 0 12px">Unlimited randomized questions from your assigned books, with instant feedback. Practice doesn’t affect your tracked scores.</p>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <select id="practice-count" style="width:auto">
+          <option value="5">5 questions</option>
+          <option value="10" selected>10 questions</option>
+          <option value="15">15 questions</option>
+          <option value="20">20 questions</option>
+        </select>
+        <button id="btn-practice">Start practice</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>My Progress</h2>
+      <p class="tiny" style="margin:2px 0 10px">Daily quiz scores, most recent 30 days taken</p>
+      <div id="chart-me"></div>
+    </div>
+
+    <div class="card">
+      <h2>My Assigned Books</h2>
+      <div class="bookchips" id="my-books"></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="view-quiz" class="hidden">
+    <div class="card">
+      <div style="display:flex;align-items:baseline">
+        <h2 id="quiz-title">Quiz</h2>
+        <div class="spacer"></div>
+        <span class="qcount" id="quiz-count"></span>
+      </div>
+      <div class="qprogress"><div id="quiz-bar" style="width:0%"></div></div>
+      <div id="quiz-q"></div>
+      <div class="feedback" id="quiz-feedback"></div>
+      <div class="quiz-nav">
+        <button id="btn-quiz-next" class="hidden">Next</button>
+        <button id="btn-quiz-submit" class="hidden">Submit quiz</button>
+        <button id="btn-quiz-quit" class="secondary">Quit</button>
+        <span class="tiny" id="quiz-note"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="view-results" class="hidden">
+    <div class="card score-banner">
+      <div id="res-label" class="muted"></div>
+      <div class="huge" id="res-score"></div>
+      <div class="muted" id="res-sub"></div>
+      <div style="margin-top:18px"><button id="btn-res-home">Back to dashboard</button></div>
+    </div>
+    <div class="card">
+      <h2>Review</h2>
+      <div id="res-review"></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="/chart.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
